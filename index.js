@@ -27,3 +27,10 @@ app.post('/api/songs', [validateSong], (req, res) => {
     const addedNewSong = repoContext.songs.createSong(newSong);
     return res.send(addedNewSong);
 });
+
+app.put('/api/songs/:id', [validateSong], (req, res) => {
+    const id = req.params.id;
+    const propertyToUpdate = req.body;
+    const updatedSong = repoContext.songs.updateSong(id, propertyToUpdate);
+    return res.send(updatedSong);
+});
