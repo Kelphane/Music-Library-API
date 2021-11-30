@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const repoContext = require("./repository/repository-wrapper");
+const { validateSong } = require("./middleware/rerpository-validation");
 
 const app = express();
 
@@ -19,4 +20,10 @@ app.get('/api/songs/:id', (req, res) => {
     const id = req.params.id;
     const song = repoContext.songs.findSongById(id);
     return res.send(song);
+});
+
+app.post('/api/songs', [validateSong], (req, res) => {
+    const newSong = req.body;
+    const addedNewSong = repoContext.songs.createSong(newSong);
+    return res.send(addedNewSong);
 });
